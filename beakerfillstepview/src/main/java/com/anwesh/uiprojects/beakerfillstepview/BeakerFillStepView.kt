@@ -30,15 +30,15 @@ fun Float.sinify() : Float = Math.sin(this * Math.PI).toFloat()
 
 fun Canvas.drawBeakerFillStep(scale : Float, w : Float, h : Float, paint : Paint) {
     val sf : Float = scale.sinify()
-    val sf2 : Float = sf.divideScale(1, parts)
-    val sf4 : Float = sf.divideScale(3, parts)
+    val sf2 : Float = sf.divideScale(1, parts + 1)
+    val sf4 : Float = sf.divideScale(3, parts + 1)
     val sw : Float = w / sizeFactor
     val sh : Float = h / sizeFactor
     val beakerH = h / beakerSizeFactor
     save()
     translate(w / 2 - sw * 0.5f, h / 2 - sh * 0.5f)
     for (j in 0..1) {
-        val sfj : Float = sf.divideScale(j * 2, parts)
+        val sfj : Float = sf.divideScale(j * 2, parts + 1)
         val sj : Float = 1f - 2 * j
         save()
         translate(sw * j, sh * j)
@@ -49,7 +49,7 @@ fun Canvas.drawBeakerFillStep(scale : Float, w : Float, h : Float, paint : Paint
     translate(0f, sh)
     drawLine(0f, 0f, sw * sf2, 0f, paint)
     paint.color = waterColor
-    drawRect(RectF(-beakerH * sf4, 0f, sw, beakerH * sf4), paint)
+    drawRect(RectF(0f, -beakerH * sf4, sw, 0f), paint)
     restore()
     restore()
 }
