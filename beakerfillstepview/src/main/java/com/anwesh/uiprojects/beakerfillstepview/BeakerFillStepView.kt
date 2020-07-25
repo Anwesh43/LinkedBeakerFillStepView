@@ -188,4 +188,27 @@ class BeakerFillStepView(ctx : Context) : View(ctx) {
             }
         }
     }
+
+    data class Renderer(var view : BeakerFillStepView) {
+
+        private val animator : Animator = Animator(view)
+        private val bfs : BeakerFillStep = BeakerFillStep(0)
+        private val paint : Paint = Paint(Paint.ANTI_ALIAS_FLAG)
+
+        fun render(canvas : Canvas) {
+            canvas.drawColor(backColor)
+            bfs.draw(canvas, paint)
+            animator.animate {
+                bfs.update {
+                    animator.stop()
+                }
+            }
+        }
+
+        fun handleTap() {
+            bfs.startUpdating {
+                animator.start()
+            }
+        }
+    }
 }
