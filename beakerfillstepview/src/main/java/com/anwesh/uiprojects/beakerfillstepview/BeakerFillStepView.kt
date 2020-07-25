@@ -214,4 +214,13 @@ class BeakerFillStepView(ctx : Context) : View(ctx) {
             }
         }
     }
+
+    companion object {
+
+        fun create(activity : Activity) : BeakerFillStepView {
+            val view : BeakerFillStepView = BeakerFillStepView(activity)
+            activity.setContentView(view)
+            return view
+        }
+    }
 }
