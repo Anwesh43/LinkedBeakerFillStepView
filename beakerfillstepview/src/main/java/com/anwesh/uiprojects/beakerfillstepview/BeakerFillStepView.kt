@@ -34,6 +34,7 @@ fun Canvas.drawBeakerFillStep(scale : Float, w : Float, h : Float, paint : Paint
     val sf4 : Float = sf.divideScale(3, parts)
     val sw : Float = w / sizeFactor
     val sh : Float = h / sizeFactor
+    val beakerH = h / beakerSizeFactor
     save()
     translate(w / 2 - sw * 0.5f, h / 2 - sh * 0.5f)
     for (j in 0..1) {
@@ -48,7 +49,7 @@ fun Canvas.drawBeakerFillStep(scale : Float, w : Float, h : Float, paint : Paint
     translate(0f, sh)
     drawLine(0f, 0f, sw * sf2, 0f, paint)
     paint.color = waterColor
-    drawRect(RectF(-sh * sf4, 0f, sw, sh * sf4), paint)
+    drawRect(RectF(-beakerH * sf4, 0f, sw, beakerH * sf4), paint)
     restore()
     restore()
 }
@@ -64,14 +65,16 @@ fun Canvas.drawBFSNode(i : Int, scale : Float, paint : Paint) {
 
 class BeakerFillStepView(ctx : Context) : View(ctx) {
 
-    override fun onDraw(canvas : Canvas) {
+    private val renderer : Renderer = Renderer(this)
 
+    override fun onDraw(canvas : Canvas) {
+        renderer.render(canvas)
     }
 
     override fun onTouchEvent(event : MotionEvent) : Boolean {
         when (event.action) {
             MotionEvent.ACTION_DOWN -> {
-
+                renderer.handleTap()
             }
         }
         return true
